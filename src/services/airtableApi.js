@@ -17,8 +17,16 @@ function getConfigOrThrow() {
   return { baseId, ticketTable, usersTable }
 }
 
+/** Dev: Vite proxy. Prod: Cloudflare/Vercel function at same path, or set VITE_AIRTABLE_PROXY_URL. */
+function getAirtableProxyBase() {
+  const raw = import.meta.env.VITE_AIRTABLE_PROXY_URL
+  if (raw) return String(raw).replace(/\/$/, "")
+  return "/api/airtable"
+}
+
 async function airtableRequest(path, options = {}) {
-  const response = await fetch(`/api/airtable${path}`, {
+  const base = getAirtableProxyBase()
+  const response = await fetch(`${base}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
