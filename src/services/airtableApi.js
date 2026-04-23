@@ -37,7 +37,14 @@ async function airtableRequest(path, options = {}) {
     const text = await response.text()
     throw new Error(`Airtable request failed (${response.status}): ${text}`)
   }
-  return response.json()
+  const contentType = response.headers.get("content-type") || ""
+  const text = await response.text()
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      `Airtable proxy returned non-JSON response. Check production API routing for ${base}.`,
+    )
+  }
+  return JSON.parse(text)
 }
 
 async function listAllRecords(baseId, tableId) {
