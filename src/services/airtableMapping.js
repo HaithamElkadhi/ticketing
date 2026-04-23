@@ -1,11 +1,12 @@
 const env = import.meta.env || {}
 
 export const AIRTABLE_CONFIG = {
-  baseId: env.VITE_AIRTABLE_BASE_ID || env.AIRTABLE_BASE_ID || "",
+  baseId: env.VITE_AIRTABLE_BASE_ID || "",
   tables: {
-    ticket: env.VITE_AIRTABLE_TABLE_TICKET || env.AIRTABLE_TABLE_TICKET || "",
-    users: env.VITE_AIRTABLE_TABLE_USERS || env.AIRTABLE_TABLE_USERS || "",
+    ticket: env.VITE_AIRTABLE_TABLE_TICKET || "",
+    users: env.VITE_AIRTABLE_TABLE_USERS || "",
   },
+  token: env.VITE_AIRTABLE_TOKEN || "",
 }
 
 export const AIRTABLE_FIELDS = {

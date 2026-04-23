@@ -17,18 +17,14 @@ function getConfigOrThrow() {
   return { baseId, ticketTable, usersTable }
 }
 
-/** Dev: Vite proxy. Prod: Cloudflare/Vercel function at same path, or set VITE_AIRTABLE_PROXY_URL. */
-function getAirtableProxyBase() {
-  const raw = import.meta.env.VITE_AIRTABLE_PROXY_URL
-  if (raw) return String(raw).replace(/\/$/, "")
-  return "/api/airtable"
-}
-
 async function airtableRequest(path, options = {}) {
-  const base = getAirtableProxyBase()
-  const response = await fetch(`${base}${path}`, {
+  const token = AIRTABLE_CONFIG.token
+  if (!token) throw new Error("Missing VITE_AIRTABLE_TOKEN. Add it to .env.local and Vercel env vars.")
+
+  const response = await fetch(`https://api.airtable.com/v0${path}`, {
     ...options,
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
       ...(options.headers || {}),
     },
@@ -37,14 +33,7 @@ async function airtableRequest(path, options = {}) {
     const text = await response.text()
     throw new Error(`Airtable request failed (${response.status}): ${text}`)
   }
-  const contentType = response.headers.get("content-type") || ""
-  const text = await response.text()
-  if (!contentType.includes("application/json")) {
-    throw new Error(
-      `Airtable proxy returned non-JSON response. Check production API routing for ${base}.`,
-    )
-  }
-  return JSON.parse(text)
+  return response.json()
 }
 
 async function listAllRecords(baseId, tableId) {
