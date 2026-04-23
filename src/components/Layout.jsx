@@ -6,7 +6,7 @@ import { Badge } from './ui.jsx'
 const NAV = [
   { id: "dashboard",  label: "Dashboard",       icon: "◈", roles: ["admin", "front", "back"] },
   { id: "tickets",    label: "All Tickets",      icon: "≡", roles: ["admin", "front", "back"] },
-  { id: "my-tickets", label: "My Tickets",       icon: "◎", roles: ["front", "back"] },
+  { id: "my-tickets", label: "My Tickets",       icon: "◎", roles: ["admin", "front", "back"] },
   { id: "new-ticket", label: "New Ticket",       icon: "+", roles: ["admin", "front", "back"], accent: true },
   { id: "users",      label: "User Management",  icon: "◉", roles: ["admin"] },
 ]

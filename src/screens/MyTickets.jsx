@@ -75,16 +75,6 @@ export default function MyTickets() {
   const { user, tickets, navigate } = useApp()
   const [tab, setTab] = useState("submitted")
 
-  if (user.role === "admin") {
-    return (
-      <div style={{ textAlign: "center", padding: 64, color: C.muted }}>
-        <div style={{ fontSize: 36, marginBottom: 12 }}>👀</div>
-        <div style={{ fontSize: 14 }}>Admins see all tickets in the All Tickets view.</div>
-        <Btn variant="secondary" onClick={() => navigate("tickets")} style={{ marginTop: 16 }}>Go to All Tickets</Btn>
-      </div>
-    )
-  }
-
   const submitted = tickets.filter(t => t.createdBy === user.name)
   const assigned  = tickets.filter(t => t.assignedTo === user.name)
 
