@@ -41,7 +41,7 @@ export default function Dashboard() {
           }}>{user.name.charAt(0)}</div>
           <div>
             <div style={{ fontSize: 20, fontWeight: 800, color: C.text }}>
-              Good morning, {user.name.split(" ")[0]}
+              Good morning, {user.name.split(" ")[0]} 😊
             </div>
             <div style={{ fontSize: 12, color: C.muted }}>
               <Badge color={roleColor} small>{roleLabel}</Badge>
